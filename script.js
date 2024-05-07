@@ -1,5 +1,6 @@
 const container = document.querySelector('.container');
 const searchBar = document.getElementById('search-bar');
+const notification = document.getElementById('notification');
 
 const data = [
     { text: "kms", file: "isi/officialkmspico.com-KMSpico-setup.zip" },
@@ -12,18 +13,45 @@ const data = [
     // Tambahkan item lainnya sesuai dengan struktur folder dan nama filenya
 ];
 
-function createSquare(item) {
-    const square = document.createElement('div');
-    square.classList.add('square');
-    square.textContent = item.text;
-    square.addEventListener('click', () => {
+// Fungsi untuk menampilkan notifikasi
+function showNotification(message, status) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.classList.add('notification', status);
+    notification.style.display = 'block';
+
+    setTimeout(() => {
+        notification.textContent = '';
+        notification.classList.remove('notification', status);
+        notification.style.display = 'none';
+    }, 3000); // Notifikasi akan hilang setelah 3 detik
+}
+
+function createCardView(item) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    const fileName = document.createElement('p');
+    fileName.textContent = item.text;
+    card.appendChild(fileName);
+
+    const downloadBtn = document.createElement('button');
+    downloadBtn.textContent = getFileType(item.file) === 'pdf' ? 'View' : 'Download';
+    downloadBtn.style.backgroundColor = getFileType(item.file) === 'pdf' ? '#3498db' : '#2ecc71';
+    downloadBtn.addEventListener('click', () => {
         handleFile(item.file);
     });
-    container.appendChild(square);
+    card.appendChild(downloadBtn);
+
+    container.appendChild(card);
+}
+
+function getFileType(file) {
+    return file.split('.').pop().toLowerCase();
 }
 
 function handleFile(file) {
-    const extension = file.split('.').pop().toLowerCase();
+    const extension = getFileType(file);
     if (extension === 'pdf') {
         viewPDF(file);
     } else {
@@ -32,12 +60,10 @@ function handleFile(file) {
 }
 
 function viewPDF(file) {
-    // Buka file PDF dalam tab baru
     window.open(file, '_blank');
 }
 
 function downloadFile(file) {
-    // Unduh file
     const link = document.createElement('a');
     link.href = file;
     link.download = file.split('/').pop();
@@ -53,7 +79,7 @@ function showNotFoundMessage() {
 }
 
 function clearContainer() {
-    container.innerHTML = ''; // Hapus persegi atau pesan yang ada
+    container.innerHTML = '';
 }
 
 searchBar.addEventListener('input', () => {
@@ -65,6 +91,11 @@ searchBar.addEventListener('input', () => {
     if (filteredData.length === 0) {
         showNotFoundMessage();
     } else {
-        filteredData.forEach(createSquare);
+        filteredData.forEach(createCardView);
     }
 });
+
+// Contoh pemanggilan notifikasi
+// Ganti 'status' dengan 'success' atau 'error' untuk perbedaan warna
+showNotification('Koneksi aman', 'success'); // Notifikasi untuk koneksi aman
+// showNotification('Koneksi tidak aman', 'error'); // Notifikasi untuk koneksi tidak aman
