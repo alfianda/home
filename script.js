@@ -4,6 +4,7 @@ const notification = document.getElementById('notification');
 const addItemBtn = document.getElementById('add-item-btn');
 const addItemForm = document.getElementById('add-item-form');
 const submitNewItemBtn = document.getElementById('submit-new-item');
+const cancelNewItemBtn = document.getElementById('cancel-new-item');
 
 const data = [
     { text: "kms", file: "isi/officialkmspico.com-KMSpico-setup.zip" },
@@ -113,4 +114,11 @@ submitNewItemBtn.addEventListener('click', () => {
     } else {
         showNotification('Harap isi semua kolom', 'error');
     }
+});
+
+cancelNewItemBtn.addEventListener('click', () => {
+    addItemForm.style.display = 'none';
+    document.getElementById('new-item-text').value = '';
+    document.getElementById('new-item-file').value = null;
+    showNotification('Penambahan item baru dibatalkan', 'error');
 });
