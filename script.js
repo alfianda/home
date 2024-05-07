@@ -1,6 +1,9 @@
 const container = document.querySelector('.container');
 const searchBar = document.getElementById('search-bar');
 const notification = document.getElementById('notification');
+const addItemBtn = document.getElementById('add-item-btn');
+const addItemForm = document.getElementById('add-item-form');
+const submitNewItemBtn = document.getElementById('submit-new-item');
 
 const data = [
     { text: "kms", file: "isi/officialkmspico.com-KMSpico-setup.zip" },
@@ -13,9 +16,7 @@ const data = [
     // Tambahkan item lainnya sesuai dengan struktur folder dan nama filenya
 ];
 
-// Fungsi untuk menampilkan notifikasi
 function showNotification(message, status) {
-    const notification = document.getElementById('notification');
     notification.textContent = message;
     notification.classList.add('notification', status);
     notification.style.display = 'block';
@@ -24,7 +25,7 @@ function showNotification(message, status) {
         notification.textContent = '';
         notification.classList.remove('notification', status);
         notification.style.display = 'none';
-    }, 3000); // Notifikasi akan hilang setelah 3 detik
+    }, 3000);
 }
 
 function createCardView(item) {
@@ -95,7 +96,21 @@ searchBar.addEventListener('input', () => {
     }
 });
 
-// Contoh pemanggilan notifikasi
-// Ganti 'status' dengan 'success' atau 'error' untuk perbedaan warna
-showNotification('Koneksi aman', 'success'); // Notifikasi untuk koneksi aman
-// showNotification('Koneksi tidak aman', 'error'); // Notifikasi untuk koneksi tidak aman
+addItemBtn.addEventListener('click', () => {
+    addItemForm.style.display = 'block';
+});
+
+submitNewItemBtn.addEventListener('click', () => {
+    const newItemText = document.getElementById('new-item-text').value;
+    const newItemFile = document.getElementById('new-item-file').files[0];
+
+    if (newItemText && newItemFile) {
+        const newItem = { text: newItemText, file: URL.createObjectURL(newItemFile) };
+        data.push(newItem);
+        createCardView(newItem);
+        addItemForm.style.display = 'none';
+        showNotification('Item baru berhasil ditambahkan', 'success');
+    } else {
+        showNotification('Harap isi semua kolom', 'error');
+    }
+});
