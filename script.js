@@ -7,13 +7,7 @@ const submitNewItemBtn = document.getElementById('submit-new-item');
 const cancelNewItemBtn = document.getElementById('cancel-new-item');
 
 const data = [
-    { text: "kms", file: "isi/officialkmspico.com-KMSpico-setup.zip" },
-    { text: "aplkasi Atlas", file: "isi/Aplikasi ATLAS.xlsx" },
-    { text: "LKP Dagang", file: "isi/Excel Laporan Keuangan Perusahaan Dagang Otomatis Ver 2 @HikmahSarjana BLANKO.xlsb" },
-    { text: "winrar", file: "isi/WinRAR.6.24.zip" },
-    { text: "Pajak resume PPH21", file: "isi/Perpajakan_Resume PPh 21 & 26_Release_2024.pdf" },
-    { text: "Prak pajak sesi5", file: "isi/Praktikum Pajak Sesi 5.pdf" },
-    { text: "Prak pajak sesi4", file: "isi/Praktikum Perpajakan2_Resume PPh 21 & 26_Sesi 4.pdf" },
+    { text: "Contoh biaya produksi", file: "Contoh Biaya produksi.xlsx" },
     // Tambahkan item lainnya sesuai dengan struktur folder dan nama filenya
 ];
 
